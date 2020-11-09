@@ -13,3 +13,7 @@ export const waitForComponentToPaint = async (wrapper, time = 0) => {
     wrapper.update();
   });
 };
+
+export const findElementByTestId = (wrapper: any, id: string) => {
+  return wrapper.find(`[test-id="${id}"]`);
+};
