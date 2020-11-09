@@ -1,3 +1,4 @@
+import produce from "immer";
 import { ICartState } from "./types";
 import { addProductToCart } from "../cart/actions";
 import * as actions from "../cart/actions";
@@ -12,10 +13,19 @@ export default function cartReducer(
 ) {
   switch (action.type) {
     case actions.ADD_PRODUCT_TO_CART:
-      return {
-        ...state,
-        items: [...state.items, { product: action.product, quantity: 1 }],
-      };
+      const productToBeAdded = action.product;
+      const productFoundIndex = state.items.findIndex(
+        (item) => item.product.id === productToBeAdded.id
+      );
+      if (productFoundIndex >= 0) {
+        return produce(state, (draft) => {
+          draft.items[productFoundIndex].quantity++;
+        });
+      } else {
+        return produce(state, (draft) => {
+          draft.items.push({ product: action.product, quantity: 1 });
+        });
+      }
     default:
       return state;
   }
