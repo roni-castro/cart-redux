@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { ICartState } from "./modules/cart/types";
 import rootReducers from "./modules/rootReducers";
+import rootSagas from "../store/modules/rootSagas";
 
 export interface IStoreState {
   cart: ICartState;
@@ -16,6 +17,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middlewares))
 );
 
-// sagaMiddleware.run(sagas)
+sagaMiddleware.run(rootSagas);
 
 export default store;
