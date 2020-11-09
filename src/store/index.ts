@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { ICartState } from "./modules/cart/types";
 import rootReducers from "./modules/rootReducers";
@@ -7,6 +8,14 @@ export interface IStoreState {
   cart: ICartState;
 }
 
-const store = createStore(rootReducers, composeWithDevTools());
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware];
+
+const store = createStore(
+  rootReducers,
+  composeWithDevTools(applyMiddleware(...middlewares))
+);
+
+// sagaMiddleware.run(sagas)
 
 export default store;
