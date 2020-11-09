@@ -26,7 +26,7 @@ function* checkAvailableStock({
       yield put(actions.addProductToCartFailure(product.id));
     }
   } catch (err) {
-    yield put(actions.addProductToCartFailure(product.id));
+    yield put(actions.addProductToCartGenericFailure(err));
   }
 }
 
