@@ -15,8 +15,8 @@ export default function cartReducer(
 ) {
   switch (action.type) {
     case actions.ADD_PRODUCT_TO_CART_SUCCESS:
-      const product = (action as actions.AddProductToCartRequestType).product;
-      const productToBeAdded = product;
+      const productToBeAdded = (action as actions.AddProductToCartRequestType)
+        .product;
       const productFoundIndex = state.items.findIndex(
         (item) => item.product.id === productToBeAdded.id
       );
@@ -26,7 +26,7 @@ export default function cartReducer(
         });
       } else {
         return produce(state, (draft) => {
-          draft.items.push({ product, quantity: 1 });
+          draft.items.push({ product: productToBeAdded, quantity: 1 });
         });
       }
     case actions.ADD_PRODUCT_TO_CART_FAILURE:
